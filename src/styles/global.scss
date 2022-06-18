@@ -1,0 +1,14 @@
+@use "fonts" as *;
+@use "variables";
+
+:root {
+  font-family: Roboto, sans-serif !important;
+
+  @include variables.color;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

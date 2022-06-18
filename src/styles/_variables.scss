@@ -1,0 +1,19 @@
+@mixin color {
+  --color-tone: #6e6c68;
+  --color-tint: #b5b3ae;
+
+  --color-success: #2dd36f;
+  --color-success-shade: #28ba62;
+  --color-success-tint: #74e39a;
+  --color-success-tone: #1e4620;
+
+  --color-warning: #ffc409;
+  --color-warning-shade: #e0ac08;
+  --color-warning-tint: #ffca22;
+  --color-warning-tone: #dc9122;
+
+  --color-danger: #eb445a;
+  --color-danger-shade: #cf3c4f;
+  --color-danger-tint: #ed576b;
+  --color-danger-tone: #5f2120;
+}
