@@ -41,12 +41,14 @@ const TreemapGenerator = () => {
   return (
     <div className={styles.container}>
       <div className={styles.inputs}>
+        <div>Data</div>
         <JsonInput
           value={jsonInput}
           placeholder={JSON.stringify(sampleJsonInput)}
           onChange={onJsonInputChangeHandler}
         />
         <br />
+        <div>Row Number</div>
         <RowInput
           value={rowInput}
           placeholder={"3"}
