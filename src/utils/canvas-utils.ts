@@ -61,7 +61,7 @@ const drawText = (
   canvasTxt.drawText(ctx!, txt, xPos, yPos, width, heightPerRow);
 };
 
-const drawRectangles = (
+const drawTreemapObject = (
   canvas: HTMLCanvasElement,
   jsonObjects: TreemapObject[],
   widthPerWeightUnit: number,
@@ -98,4 +98,26 @@ const drawRectangles = (
   return null;
 };
 
-export { cleanCanvas, drawBorder, drawRectangle, drawText, drawRectangles };
+const drawError = (
+  err: any,
+  canvas: HTMLCanvasElement,
+  xPos: number,
+  yPos: number,
+  width: number,
+  height: number
+) => {
+  var msg = String(err);
+  var ctx = canvas.getContext("2d");
+  console.debug(ctx);
+  ctx!.fillStyle = "red";
+  canvasTxt.drawText(ctx!, msg, xPos, yPos, width, height);
+};
+
+export {
+  cleanCanvas,
+  drawBorder,
+  drawRectangle,
+  drawText,
+  drawTreemapObject,
+  drawError,
+};

@@ -4,27 +4,36 @@ import {
   sortTreemapObjectsByWeight,
   getWeightStatus,
   filterNotInArray,
+  verifyInput,
 } from "../../utils/treemap-utils";
-import { cleanCanvas, drawRectangles } from "../../utils/canvas-utils";
+import {
+  cleanCanvas,
+  drawTreemapObject,
+  drawError,
+} from "../../utils/canvas-utils";
 import styles from "./Treemap.module.scss";
 
 type Props = {
   jsonInput: string;
   rowInput: string;
+  canvasWidth: number;
+  canvasHeight: number;
 };
 
-const Treemap: React.FC<Props> = ({ jsonInput, rowInput }) => {
-  // fixed canvas width for now
-  const canvasWidth = 500;
-  const canvasHeight = 600;
+const Treemap: React.FC<Props> = ({
+  jsonInput,
+  rowInput,
+  canvasWidth,
+  canvasHeight,
+}) => {
   var canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     var canvas = canvasRef.current as HTMLCanvasElement;
     cleanCanvas(canvas);
     try {
-      var treemapObjects = JSON.parse(jsonInput);
-      const numberOfRow = parseInt(rowInput);
+      // throw error if the Json input format is incorrect
+      var { treemapObjects, numberOfRow } = verifyInput(jsonInput, rowInput);
 
       // sort the array of objects based on the weights
       sortTreemapObjectsByWeight(treemapObjects);
@@ -51,7 +60,7 @@ const Treemap: React.FC<Props> = ({ jsonInput, rowInput }) => {
       for (var currentRow = 1; currentRow <= numberOfRow; currentRow++) {
         var drawnTreemap: TreemapObject | null = null;
         do {
-          drawnTreemap = drawRectangles(
+          drawnTreemap = drawTreemapObject(
             canvas,
             treemapObjects,
             widthPerWeightUnit,
@@ -71,9 +80,11 @@ const Treemap: React.FC<Props> = ({ jsonInput, rowInput }) => {
         } while (drawnTreemap != null);
       }
     } catch (err) {
-      console.log(err);
+      if (jsonInput === "" || rowInput === "") return;
+      // show error message on the canvas
+      drawError(err, canvas, 0, 0, canvasWidth, canvasHeight);
     }
-  }, [jsonInput, rowInput]);
+  }, [jsonInput, rowInput, canvasWidth, canvasHeight]);
 
   return (
     <canvas
