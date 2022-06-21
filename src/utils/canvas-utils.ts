@@ -57,7 +57,9 @@ const drawText = (
 ) => {
   var ctx = canvas.getContext("2d");
   ctx!.fillStyle = "black";
-  const txt = object.name + "\n" + object.value * 100 + "%";
+  const value = parseFloat((object.value * 100).toFixed(2));
+  console.log("!", value);
+  const txt = object.name + "\n" + value + "%";
   canvasTxt.drawText(ctx!, txt, xPos, yPos, width, heightPerRow);
 };
 
@@ -108,7 +110,6 @@ const drawError = (
 ) => {
   var msg = String(err);
   var ctx = canvas.getContext("2d");
-  console.debug(ctx);
   ctx!.fillStyle = "red";
   canvasTxt.drawText(ctx!, msg, xPos, yPos, width, height);
 };
