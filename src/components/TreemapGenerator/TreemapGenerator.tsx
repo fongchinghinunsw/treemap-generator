@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import sampleJsonInput from "../../sample.json";
 import JsonInput from "../JsonInput/JsonInput";
 import RowInput from "../RowInput/RowInput";
+import Treemap from "../Treemap/Treemap";
 
 const TreemapGenerator = () => {
   const [jsonInput, setJsonInput] = useState("");
@@ -30,6 +31,7 @@ const TreemapGenerator = () => {
         onChange={onRowInputChangeHandler}
       />
       <br />
+      <Treemap jsonInput={jsonInput} rowInput={rowInput} />
     </>
   );
 };
