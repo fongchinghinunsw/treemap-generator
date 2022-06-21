@@ -5,7 +5,7 @@ import {
   getWeightStatus,
   filterNotInArray,
 } from "../../utils/treemap-utils";
-import { cleanCanvas, drawRectangles } from "../../utils/canvas-utils";
+import { cleanCanvas, drawTreemapObject } from "../../utils/canvas-utils";
 import styles from "./Treemap.module.scss";
 
 type Props = {
@@ -51,7 +51,7 @@ const Treemap: React.FC<Props> = ({ jsonInput, rowInput }) => {
       for (var currentRow = 1; currentRow <= numberOfRow; currentRow++) {
         var drawnTreemap: TreemapObject | null = null;
         do {
-          drawnTreemap = drawRectangles(
+          drawnTreemap = drawTreemapObject(
             canvas,
             treemapObjects,
             widthPerWeightUnit,

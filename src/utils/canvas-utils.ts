@@ -61,7 +61,7 @@ const drawText = (
   canvasTxt.drawText(ctx!, txt, xPos, yPos, width, heightPerRow);
 };
 
-const drawRectangles = (
+const drawTreemapObject = (
   canvas: HTMLCanvasElement,
   jsonObjects: TreemapObject[],
   widthPerWeightUnit: number,
@@ -98,4 +98,4 @@ const drawRectangles = (
   return null;
 };
 
-export { cleanCanvas, drawBorder, drawRectangle, drawText, drawRectangles };
+export { cleanCanvas, drawBorder, drawRectangle, drawText, drawTreemapObject };
