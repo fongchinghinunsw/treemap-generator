@@ -1,7 +1,7 @@
 import styles from "./JsonInput.module.scss";
 
 type Props = {
-  value: string;
+  value?: string;
   placeholder: string;
   onChange: (newValue: string) => void;
 };

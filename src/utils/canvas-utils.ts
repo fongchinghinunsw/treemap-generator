@@ -108,6 +108,7 @@ const drawError = (
 ) => {
   var msg = String(err);
   var ctx = canvas.getContext("2d");
+  console.debug(ctx);
   ctx!.fillStyle = "red";
   canvasTxt.drawText(ctx!, msg, xPos, yPos, width, height);
 };
