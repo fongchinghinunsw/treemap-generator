@@ -1,3 +1,7 @@
+import InputError from "../errors/JsonInputError";
+
+const MAX_ARRAY_LENGTH = 50;
+
 type TreemapObject = {
   name: string;
   weight: number;
@@ -20,7 +24,6 @@ function getWeightStatus(objects: TreemapObject[]) {
   objects.forEach((object: TreemapObject) => {
     if (highestWeight < object.weight) {
       highestWeight = object.weight;
-      // heaviestObject = object;
     }
     totalWeight += object.weight;
   });
@@ -34,5 +37,44 @@ function filterNotInArray(
   return objects.filter((obj: TreemapObject) => obj !== filterObject);
 }
 
+function verifyInput(jsonInput: string, rowInput: string) {
+  var objects: TreemapObject[] = JSON.parse(jsonInput);
+  var numberOfRow = parseInt(rowInput);
+  console.log(rowInput);
+  if (isNaN(numberOfRow) || !rowInput.match(/^[0-9]+$/)) {
+    throw new InputError("The number of row must be an integer");
+  }
+
+  if (numberOfRow > objects.length) {
+    throw new InputError("Row number must be <= Length of the array");
+  }
+
+  if (objects.length > MAX_ARRAY_LENGTH) {
+    throw new InputError("Length of the array should be <= 50");
+  }
+
+  objects.forEach((object) => {
+    if (typeof object.name != "string") {
+      throw new InputError(
+        "The name attribute of each object must be of type string"
+      );
+    } else if (!Number.isInteger(object.weight)) {
+      throw new InputError(
+        "The weight attribute of each object must be of type integer"
+      );
+    } else if (typeof object.value != "number") {
+      throw new InputError(
+        "The value attribute of each object must be of type number"
+      );
+    }
+  });
+  return { treemapObjects: objects, numberOfRow };
+}
+
 export type { TreemapObject };
-export { sortTreemapObjectsByWeight, getWeightStatus, filterNotInArray };
+export {
+  sortTreemapObjectsByWeight,
+  getWeightStatus,
+  filterNotInArray,
+  verifyInput,
+};

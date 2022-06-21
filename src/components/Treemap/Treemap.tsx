@@ -4,8 +4,13 @@ import {
   sortTreemapObjectsByWeight,
   getWeightStatus,
   filterNotInArray,
+  verifyInput,
 } from "../../utils/treemap-utils";
-import { cleanCanvas, drawTreemapObject } from "../../utils/canvas-utils";
+import {
+  cleanCanvas,
+  drawTreemapObject,
+  drawError,
+} from "../../utils/canvas-utils";
 import styles from "./Treemap.module.scss";
 
 type Props = {
@@ -27,8 +32,8 @@ const Treemap: React.FC<Props> = ({
     var canvas = canvasRef.current as HTMLCanvasElement;
     cleanCanvas(canvas);
     try {
-      var treemapObjects = JSON.parse(jsonInput);
-      const numberOfRow = parseInt(rowInput);
+      // throw error if the Json input format is incorrect
+      var { treemapObjects, numberOfRow } = verifyInput(jsonInput, rowInput);
 
       // sort the array of objects based on the weights
       sortTreemapObjectsByWeight(treemapObjects);
@@ -75,9 +80,11 @@ const Treemap: React.FC<Props> = ({
         } while (drawnTreemap != null);
       }
     } catch (err) {
-      console.log(err);
+      if (jsonInput === "" || rowInput === "") return;
+      // show error message on the canvas
+      drawError(err, canvas, 0, 0, canvasWidth, canvasHeight);
     }
-  }, [jsonInput, rowInput]);
+  }, [jsonInput, rowInput, canvasWidth, canvasHeight]);
 
   return (
     <canvas

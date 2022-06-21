@@ -98,4 +98,25 @@ const drawTreemapObject = (
   return null;
 };
 
-export { cleanCanvas, drawBorder, drawRectangle, drawText, drawTreemapObject };
+const drawError = (
+  err: any,
+  canvas: HTMLCanvasElement,
+  xPos: number,
+  yPos: number,
+  width: number,
+  height: number
+) => {
+  var msg = String(err);
+  var ctx = canvas.getContext("2d");
+  ctx!.fillStyle = "red";
+  canvasTxt.drawText(ctx!, msg, xPos, yPos, width, height);
+};
+
+export {
+  cleanCanvas,
+  drawBorder,
+  drawRectangle,
+  drawText,
+  drawTreemapObject,
+  drawError,
+};
