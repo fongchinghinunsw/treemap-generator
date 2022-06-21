@@ -11,12 +11,16 @@ import styles from "./Treemap.module.scss";
 type Props = {
   jsonInput: string;
   rowInput: string;
+  canvasWidth: number;
+  canvasHeight: number;
 };
 
-const Treemap: React.FC<Props> = ({ jsonInput, rowInput }) => {
-  // fixed canvas width for now
-  const canvasWidth = 500;
-  const canvasHeight = 600;
+const Treemap: React.FC<Props> = ({
+  jsonInput,
+  rowInput,
+  canvasWidth,
+  canvasHeight,
+}) => {
   var canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
