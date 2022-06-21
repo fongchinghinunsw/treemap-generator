@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 import {
+  TreemapObject,
   sortTreemapObjectsByWeight,
   getWeightStatus,
+  filterNotInArray,
 } from "../../utils/treemap-utils";
+import { cleanCanvas, drawRectangles } from "../../utils/canvas-utils";
 import styles from "./Treemap.module.scss";
 
 type Props = {
@@ -18,6 +21,7 @@ const Treemap: React.FC<Props> = ({ jsonInput, rowInput }) => {
 
   useEffect(() => {
     var canvas = canvasRef.current as HTMLCanvasElement;
+    cleanCanvas(canvas);
     try {
       var treemapObjects = JSON.parse(jsonInput);
       const numberOfRow = parseInt(rowInput);
@@ -43,7 +47,29 @@ const Treemap: React.FC<Props> = ({ jsonInput, rowInput }) => {
       // each rectangle has the same height
       var heightPerRow = canvasHeight / numberOfRow;
 
-      console.log(heightPerRow, widthPerWeightUnit);
+      var currentColumnPosition = 0;
+      for (var currentRow = 1; currentRow <= numberOfRow; currentRow++) {
+        var drawnTreemap: TreemapObject | null = null;
+        do {
+          drawnTreemap = drawRectangles(
+            canvas,
+            treemapObjects,
+            widthPerWeightUnit,
+            heightPerRow,
+            currentRow,
+            currentColumnPosition
+          );
+          if (drawnTreemap != null) {
+            // drawing in the current row, advance the x coordinate
+            currentColumnPosition += drawnTreemap.weight * widthPerWeightUnit;
+            // remove drawn rectangle from the array
+            treemapObjects = filterNotInArray(treemapObjects, drawnTreemap);
+          } else {
+            // start drawing in the next row, reseting the x coordinate
+            currentColumnPosition = 0;
+          }
+        } while (drawnTreemap != null);
+      }
     } catch (err) {
       console.log(err);
     }

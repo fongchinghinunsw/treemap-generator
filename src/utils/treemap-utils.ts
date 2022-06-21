@@ -27,5 +27,12 @@ function getWeightStatus(objects: TreemapObject[]) {
   return { totalWeight, highestWeight };
 }
 
+function filterNotInArray(
+  objects: TreemapObject[],
+  filterObject: TreemapObject
+) {
+  return objects.filter((obj: TreemapObject) => obj !== filterObject);
+}
+
 export type { TreemapObject };
-export { sortTreemapObjectsByWeight, getWeightStatus };
+export { sortTreemapObjectsByWeight, getWeightStatus, filterNotInArray };
