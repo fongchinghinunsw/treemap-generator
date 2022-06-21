@@ -40,7 +40,7 @@ function filterNotInArray(
 function verifyInput(jsonInput: string, rowInput: string) {
   var objects: TreemapObject[] = JSON.parse(jsonInput);
   var numberOfRow = parseInt(rowInput);
-  console.log(rowInput);
+
   if (isNaN(numberOfRow) || !rowInput.match(/^[0-9]+$/)) {
     throw new InputError("The number of row must be an integer");
   }
