@@ -2,7 +2,17 @@ FROM node:17-alpine
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install libcairo-dev -y
+RUN apk add --update --no-cache \
+    make \
+    g++ \
+    jpeg-dev \
+    cairo-dev \
+    giflib-dev \
+    pango-dev \
+    libtool \
+    autoconf \
+    automake
+
 COPY package.json .
 RUN npm install
 COPY . .
